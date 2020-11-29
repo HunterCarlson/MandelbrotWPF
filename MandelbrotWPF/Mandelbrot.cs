@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace MandelbrotWPF
 {
@@ -99,35 +96,6 @@ namespace MandelbrotWPF
             }
 
             return iterations;
-        }
-
-        public static (List<Complex> listZ, List<double> listR) IterateZWithLogging(Complex c, int maxIterations)
-        {
-            var listZ = new List<Complex>();
-            var listR = new List<double>();
-
-            int iterations = 0;
-            var z = new Complex(0, 0);
-
-            while (iterations < maxIterations)
-            {
-                Complex z2 = Complex.Add(Complex.Pow(z, 2), c);
-                z2 = new Complex(Math.Round(z2.Real, 10), Math.Round(z2.Imaginary, 10));
-
-                double r = z2.Magnitude;
-                listZ.Add(z2);
-                listR.Add(r);
-
-                if (r > MAX_R)
-                {
-                    break;
-                }
-
-                z = z2;
-                iterations++;
-            }
-
-            return (listZ, listR);
         }
     }
 }

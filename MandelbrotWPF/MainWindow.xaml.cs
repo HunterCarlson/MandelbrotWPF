@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 
 namespace MandelbrotWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -34,16 +24,19 @@ namespace MandelbrotWPF
             var mandelbrot = new Mandelbrot();
 
             const int maxIterations = 100;
-            var pxSize = 800;
+            int pxSize = 800;
+
+            int[][] iterations = mandelbrot.GenerateParallel(800, maxIterations);
+
+            double hueStep = 36;
+            double hueOffset = 0;
 
             WriteableBitmap writeableBitmap = BitmapFactory.New(pxSize, pxSize);
 
             image.Source = writeableBitmap;
 
-            int[][] iterations = mandelbrot.Generate(800, maxIterations);
-
-            double hueStep = 36;
-            double hueOffset = 0;
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             using (writeableBitmap.GetBitmapContext())
             {
@@ -61,7 +54,7 @@ namespace MandelbrotWPF
                         {
                             double hue = (hueStep * (iterations[i][j] - 1) + hueOffset) % 360;
                             ColorConverter.HsvToRgb(hue, 1, 1, out int r, out int g, out int b);
-                            color = Color.FromRgb((byte) r, (byte)g, (byte)b);
+                            color = Color.FromRgb((byte) r, (byte) g, (byte) b);
                         }
 
                         writeableBitmap.SetPixel(i, j, color);
@@ -69,6 +62,8 @@ namespace MandelbrotWPF
                 }
             }
 
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
         }
     }
 }

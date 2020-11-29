@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MandelbrotWPF
 {
@@ -48,7 +44,7 @@ namespace MandelbrotWPF
             else
             {
                 double hf = h / 60.0;
-                int i = (int)Math.Floor(hf);
+                int i = (int) Math.Floor(hf);
                 double f = hf - i;
                 double pv = value * (1 - saturation);
                 double qv = value * (1 - saturation * f);
@@ -118,15 +114,15 @@ namespace MandelbrotWPF
                     default:
                         throw new Exception($"i Value error in Pixel conversion, Value is {i}");
 
-                        //r = g = b = value; // Just pretend its black/white
+                    //r = g = b = value; // Just pretend its black/white
 
-                        //break;
+                    //break;
                 }
             }
 
-            red = Clamp((int)(r * 255.0));
-            green = Clamp((int)(g * 255.0));
-            blue = Clamp((int)(b * 255.0));
+            red = Clamp((int) (r * 255.0));
+            green = Clamp((int) (g * 255.0));
+            blue = Clamp((int) (b * 255.0));
         }
 
         /// <summary>
